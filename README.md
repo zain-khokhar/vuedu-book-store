@@ -1,3 +1,4 @@
+
 # VUEDU BOOK BANK
 
 A modern, responsive bookstore application for Virtual University students to buy and sell hardcopy textbooks across Pakistan.
@@ -197,6 +198,9 @@ npm run start
 ### Environment Variables for Production
 Ensure all environment variables are properly set for production deployment.
 
----
+
 
 **Made with ❤️ for Virtual University Students across Pakistan**
+=======
+# vuedu-book-store
+
