@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function BookCard({ book }) {
   const {
@@ -9,7 +8,6 @@ export default function BookCard({ book }) {
     category,
     price,
     condition,
-    images,
     seller,
     views,
     createdAt
@@ -49,26 +47,11 @@ export default function BookCard({ book }) {
   return (
     <Link href={`/books/${_id}`}>
       <div className="bg-white rounded-lg border shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
-        {/* Image Section */}
-        <div className="aspect-4/3 bg-gray-100 relative overflow-hidden">
-          {images && images.length > 0 ? (
-            <Image
-              src={images[0]}
-              alt={title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-blue-50 to-indigo-100">
-              <div className="text-center">
-                <svg className="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                <p className="text-xs text-gray-500">No Image</p>
-              </div>
-            </div>
-          )}
+        {/* Course Code Section */}
+        <div className="aspect-4/3 bg-gray-100 relative overflow-hidden flex items-center justify-center">
+          <div className="text-center">
+            <span className="text-2xl font-bold text-gray-700">{courseCode}</span>
+          </div>
           
           {/* Category Badge */}
           <div className="absolute top-2 left-2">
@@ -119,7 +102,7 @@ export default function BookCard({ book }) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
               </svg>
-              {views || 0}
+              {Math.floor(views) || 0}
             </span>
           </div>
 

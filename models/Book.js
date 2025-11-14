@@ -38,10 +38,6 @@ const bookSchema = new mongoose.Schema({
     enum: ['new', 'like-new', 'good', 'fair'],
     required: true
   },
-  images: [{
-    type: String,
-    trim: true
-  }],
   seller: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

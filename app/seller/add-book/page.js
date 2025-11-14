@@ -20,7 +20,6 @@ export default function AddBookPage() {
     edition: '',
     isbn: '',
     semester: '',
-    images: [],
     tags: ''
   });
 
