@@ -4,8 +4,13 @@ import { authMiddleware } from '../../../../lib/auth.js';
 
 export async function POST(request) {
   try {
+    console.log('Bulk upload API called');
+    
     const authResult = await authMiddleware(request);
+    console.log('Auth result:', authResult);
+    
     if (authResult.error) {
+      console.error('Auth error:', authResult.error);
       return Response.json(
         { success: false, error: authResult.error },
         { status: authResult.status }
