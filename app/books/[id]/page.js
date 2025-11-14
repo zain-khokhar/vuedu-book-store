@@ -26,9 +26,40 @@ export default function BookDetailPage() {
 
   useEffect(() => {
     if (params?.id) {
+      // track view first so count is updated, then fetch latest book data
+      trackBookView();
       fetchBook();
     }
   }, [params?.id]);
+
+  // Track book view
+  const trackBookView = async () => {
+    try {
+      // Get session_id
+      let sessionId;
+      if (typeof window !== 'undefined') {
+        const { getOrCreateSessionId } = await import('../../../lib/session');
+        sessionId = getOrCreateSessionId();
+      }
+      // Get user_id from localStorage (if logged in)
+      let userId = null;
+      if (typeof window !== 'undefined') {
+        const userData = localStorage.getItem('user');
+        if (userData) {
+          try {
+            userId = JSON.parse(userData)._id;
+          } catch {}
+        }
+      }
+      await fetch(`/api/books/${params.id}/view`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: sessionId })
+      });
+    } catch (err) {
+      // Ignore errors for view tracking
+    }
+  };
 
   const fetchBook = async () => {
     try {
@@ -37,6 +68,23 @@ export default function BookDetailPage() {
         const result = await response.json();
         setBook(result.data);
       } else {
+        console.error('Book details fetch failed with status:', response.status);
+        // Fallback: try finding by courseCode if user navigated using courseCode
+        try {
+          const searchResp = await fetch(`/api/books?courseCode=${params.id}`);
+          if (searchResp.ok) {
+            const searchResult = await searchResp.json();
+            const books = searchResult.data?.books || [];
+            if (books.length > 0) {
+              // Redirect to canonical book id
+              router.push(`/books/${books[0]._id}`);
+              return;
+            }
+          }
+        } catch (err) {
+          console.error('Fallback search by courseCode failed', err);
+        }
+
         router.push('/404');
       }
     } catch (error) {
@@ -219,7 +267,7 @@ export default function BookDetailPage() {
                     )}
                     <div>
                       <span className="font-medium text-gray-700">Views:</span>
-                      <span className="ml-2 text-gray-600">{book.views || 0}</span>
+                      <span className="ml-2 text-gray-600">{Math.floor(book.views) || 0}</span>
                     </div>
                   </div>
                 </div>

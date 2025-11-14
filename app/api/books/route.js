@@ -77,14 +77,6 @@ export async function GET(request) {
       Book.countDocuments(query)
     ]);
 
-    // Increment view count for analytics (but don't wait for it)
-    if (books.length > 0 && !search) {
-      const bookIds = books.map(book => book._id);
-        Book.updateMany(
-          { _id: { $in: bookIds } },
-          { $inc: { views: 1 } }
-        ).catch(console.error);
-    }
 
     const totalPages = Math.ceil(totalCount / limit);
 

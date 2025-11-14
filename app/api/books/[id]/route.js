@@ -6,7 +6,7 @@ export async function GET(request, { params }) {
   try {
     await dbConnect();
     
-    const { id } = params;
+    const { id } = await params;
     
     const book = await Book.findById(id)
       .populate('seller', 'name email phone whatsapp address')
@@ -46,7 +46,7 @@ export async function PUT(request, { params }) {
     }
 
     const { user } = authResult;
-    const { id } = params;
+    const { id } = await params;
 
     await dbConnect();
     
@@ -102,7 +102,7 @@ export async function DELETE(request, { params }) {
     }
 
     const { user } = authResult;
-    const { id } = params;
+    const { id } = await params;
 
     await dbConnect();
     
