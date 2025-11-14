@@ -48,9 +48,9 @@ export default function BookCard({ book }) {
     <Link href={`/books/${_id}`}>
       <div className="bg-white rounded-lg border shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
         {/* Course Code Section */}
-        <div className="aspect-4/3 bg-gray-100 relative overflow-hidden flex items-center justify-center">
+        <div className="aspect-4/3 bg-blue-900 relative overflow-hidden flex items-center justify-center">
           <div className="text-center">
-            <span className="text-2xl font-bold text-gray-700">{courseCode}</span>
+            <span className="text-2xl font-bold text-white ">{courseCode}</span>
           </div>
           
           {/* Category Badge */}
